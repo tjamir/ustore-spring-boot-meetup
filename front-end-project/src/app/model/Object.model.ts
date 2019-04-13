@@ -6,6 +6,7 @@ export class ObjectModel {
   byteArray: any;
   type:string = "";
   name:string = "";
+  directoryId:number=0;
 
 
 
