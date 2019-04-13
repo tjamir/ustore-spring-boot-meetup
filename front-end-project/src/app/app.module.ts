@@ -33,12 +33,9 @@ import {LoginComponent} from "./login/login.component";
   declarations: [
     AppComponent,
     HomeComponent,
-<<<<<<< HEAD
     TableFoldersComponent,
-    InputFileDragDropComponent
-=======
+    InputFileDragDropComponent,
     LoginComponent
->>>>>>> 3ead799d31b9c05701dcc3528b8308b3888f966b
   ],
   bootstrap: [AppComponent]
 })
