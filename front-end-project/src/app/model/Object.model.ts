@@ -4,6 +4,8 @@ export class ObjectModel {
   lenght: number = 0;
   user_id: number = 0;
   byteArray: any;
+  type:string = "";
+  name:string = "";
 
 
 
