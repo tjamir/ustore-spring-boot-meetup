@@ -28,9 +28,9 @@ public class SessaoRest {
 	}
 
 	@RequestMapping(value = "/logout/{token}", method = RequestMethod.POST)
-	public ResponseEntity<String> logout(@PathVariable String token) throws Exception {
-
-		return ResponseEntity.ok().body(token);
+	public ResponseEntity<Void> logout(@PathVariable String token) throws Exception {
+		sessaoService.logout(token);
+		return ResponseEntity.ok().build();
 	}
 
 	@RequestMapping(value = "/check/{token}", method = RequestMethod.GET)
