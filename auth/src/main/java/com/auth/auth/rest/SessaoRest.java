@@ -1,5 +1,7 @@
 package com.auth.auth.rest;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +16,10 @@ import com.auth.auth.services.SessaoService;
 @RestController
 @RequestMapping("/sessao")
 public class SessaoRest {
-	
+
 	@Autowired
 	private SessaoService sessaoService;
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody Usuario user) throws Exception {
 		String token = sessaoService.login(user);
@@ -29,6 +31,13 @@ public class SessaoRest {
 	public ResponseEntity<String> logout(@PathVariable String token) throws Exception {
 
 		return ResponseEntity.ok().body(token);
+	}
+
+	@RequestMapping(value = "/check/{token}", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> check(@PathVariable String token) throws Exception {
+		boolean check = sessaoService.check(token);
+		
+		return ResponseEntity.ok().body(check);
 	}
 
 }

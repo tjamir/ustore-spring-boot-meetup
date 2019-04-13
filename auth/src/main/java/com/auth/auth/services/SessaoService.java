@@ -19,15 +19,15 @@ import com.auth.auth.repositories.UsuarioDAO;
  */
 @Service
 public class SessaoService {
-	
+
 	@Autowired
 	private UsuarioDAO userDAO;
-	
+
 	@Autowired
 	private SessaoDAO sessaoDAO;
-	
+
 	public String login(Usuario usuario) throws Exception {
-		Usuario user = userDAO.findByLogin(usuario.getLogin());
+		Usuario user = userDAO.findByLogin(usuario.getLogin()).orElse(null);
 
 		String login = usuario.getLogin();
 		String password = usuario.getPassword();
@@ -40,23 +40,22 @@ public class SessaoService {
 	}
 
 	public void logout(String token) throws Exception {
-		Sessao sessao = sessaoDAO.findByToken(token);
+		Sessao sessao = sessaoDAO.findByToken(token).orElse(null);
 		sessaoDAO.delete(sessao);
 	}
 
 	public boolean check(String token) throws Exception {
 		boolean isActive = true;
-		Sessao sessao = sessaoDAO.findByToken(token);
+		Sessao sessao = sessaoDAO.findByToken(token).orElse(null);
 
 		Date currentTime = new Date();
 		Date endSession = sessao.getData();
 
 		if (!sessao.isActive() || currentTime.after(endSession)) {
 			isActive = false;
-			logout(token);
+			sessaoDAO.delete(sessao);
 		}
 		return isActive;
-
 	}
 
 }
