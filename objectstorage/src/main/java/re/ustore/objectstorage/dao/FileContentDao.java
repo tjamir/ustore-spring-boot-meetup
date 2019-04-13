@@ -2,13 +2,14 @@ package re.ustore.objectstorage.dao;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.mongodb.gridfs.GridFSFile;
+import com.mongodb.client.gridfs.model.GridFSFile;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import re.ustore.objectstorage.model.ContentFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +28,19 @@ public class FileContentDao {
 
 
     public ContentFile find(Long id){
-//        List<GridFSFile> gridFSFiles = new ArrayList<GridFSFile>();
-//        gridFsTemplate.find(new Query(Criteria.where("metadata.id").is(id.toString()))).into(gridFSFiles);
-//
-//        GridFSFile gridFSFile = gridFSFiles.stream().findFirst().get();
-//
-//        ContentFile contentFile = new ContentFile();
-//        contentFile.setId(id);
-//        contentFile.setUser(gridFSFile.getMetaData().get("user").toString());
-//        contentFile.setBytes(gridFSFile.);
+
+        try {
+            List<GridFSFile> gridFSFiles = new ArrayList<GridFSFile>();
+            GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("metadata.id").is(id.toString())));
+            ContentFile contentFile = new ContentFile();
+            contentFile.setId(id);
+            contentFile.setUser(gridFSFile.getMetadata().get("user").toString());
+            byte[] bytes = this.gridFsTemplate.getResource(gridFSFile).getInputStream().readAllBytes();
+            contentFile.setBytes(bytes);
+            return contentFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
