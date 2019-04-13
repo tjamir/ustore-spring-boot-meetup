@@ -2,12 +2,12 @@ import { Injectable } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class AuthenticationService{
 
   public token: string;
-  private url = 'http://localhost:8080/api/auth/login';
 
   constructor(private http: HttpClient) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -16,7 +16,7 @@ export class AuthenticationService{
   }
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(this.url, { username: username, password: password })
+    return this.http.post<any>(environment.api_url.concat("/login"), { username: username, password: password })
       .pipe(
         map(user => {
           if (user && user.token) {
