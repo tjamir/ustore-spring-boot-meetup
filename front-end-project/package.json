@@ -51,6 +51,7 @@
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "ionicons": "^2.0.1",
+    "ngx-file-drop": "^6.0.0",
     "prismjs": "^1.8.4",
     "rxjs": "^6.4.0",
     "zone.js": "^0.8.29"

@@ -1,0 +1,21 @@
+
+<mk-box header="Folder" [isCollapsable]="true" [isRemovable]="false" contentClasses="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Modified</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+    <tbody *ngFor="let d of dataFiles">    
+      <tr>
+        <td>{{d.name}}</td>
+        <td>{{d.last_modified}}</td>
+        <td>{{d.status}}</td>
+        <td></td>
+      </tr>     
+    </tbody>
+  </table>
+</mk-box>

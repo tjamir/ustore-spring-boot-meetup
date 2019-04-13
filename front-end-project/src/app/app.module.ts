@@ -11,7 +11,11 @@ import { LayoutModule } from 'angular-admin-lte';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
+import { FileDropModule } from 'ngx-file-drop';
+
 import { LoadingPageModule, MaterialBarModule } from 'angular-loading-page';
+import { TableFoldersComponent } from './home/table-folders/table-folders.component';
+import { InputFileDragDropComponent } from './home/input-file-drag-drop/input-file-drag-drop.component';
 
 
 @NgModule({
@@ -20,11 +24,14 @@ import { LoadingPageModule, MaterialBarModule } from 'angular-loading-page';
     AppRoutingModule,
     CoreModule,
     LayoutModule.forRoot(adminLteConf),
-    LoadingPageModule, MaterialBarModule
+    LoadingPageModule, MaterialBarModule,
+    FileDropModule
   ],
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    TableFoldersComponent,
+    InputFileDragDropComponent
   ],
   bootstrap: [AppComponent]
 })
