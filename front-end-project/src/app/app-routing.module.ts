@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+
 
 const routes: Routes = [
   {
@@ -12,7 +14,7 @@ const routes: Routes = [
   children: [
     {
       path: '',
-      component: HomeComponent
+      component: LoginComponent
     }, {
       path: 'accordion',
       loadChildren: './+accordion/accordion.module#AccordionModule',
@@ -125,7 +127,7 @@ const routes: Routes = [
     ]
   }, {
     path: 'login',
-    loadChildren: './+login/login.module#LoginModule',
+    component: LoginComponent,
     data: {
       customLayout: true
     }
