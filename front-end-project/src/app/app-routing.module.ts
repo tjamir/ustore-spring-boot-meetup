@@ -8,12 +8,8 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'pages',
-    loadChildren : 'app/pages/pages.module#PagesModule'
-  },
-  {
     path: '**',
-    redirectTo: 'logins',
+    redirectTo: 'login',
   }
   // {
   //   path: 'auth',
