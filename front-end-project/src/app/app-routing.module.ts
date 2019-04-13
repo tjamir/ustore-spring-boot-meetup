@@ -9,13 +9,14 @@ const routes: Routes = [
   {
   path: '',
   data: {
-      title: 'Get Started'
+      // title: 'Get Started'
   },
   children: [
     {
       path: '',
-      component: LoginComponent
-    }, {
+      component: HomeComponent
+    },
+    {
       path: 'accordion',
       loadChildren: './+accordion/accordion.module#AccordionModule',
       data: {
@@ -27,7 +28,8 @@ const routes: Routes = [
       data: {
         title: 'Alert',
       }
-    }, {
+    },
+    {
       path: 'layout',
       data: {
         title: 'Layout',
@@ -72,7 +74,8 @@ const routes: Routes = [
           }
         },
       ]
-    }, {
+    },
+     {
       path: 'boxs',
       data: {
         title: 'Boxs',
@@ -111,7 +114,8 @@ const routes: Routes = [
         }
       }
     ]
-  }, {
+  }, 
+  {
     path: 'form',
     data: {
       title: 'Form',
@@ -125,19 +129,7 @@ const routes: Routes = [
         }
       }
     ]
-  }, {
-    path: 'login',
-    component: LoginComponent,
-    data: {
-      customLayout: true
-    }
-  }, {
-    path: 'register',
-    loadChildren: './+register/register.module#RegisterModule',
-    data: {
-      customLayout: true
-    }
-  },
+  }
 ];
 
 @NgModule({
