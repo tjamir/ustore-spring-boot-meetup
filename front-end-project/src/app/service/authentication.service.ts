@@ -1,49 +1,35 @@
-// import { Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
-// @Injectable()
-// export class AuthenticationService{
+@Injectable()
+export class AuthenticationService{
 
-//   private readonly TOKEN = 'token';
-//   private readonly LAST_REQUEST = 'last_request';
-//   private readonly EXPIRE_SESSION_TIME: number = 1000 * 60 * 30; //Tempo em milisegundo. (30 minutos)
+  public token: string;
+  private url = 'http://localhost:8080/api/auth/login';
 
-//   public set token(value: string){
-//     localStorage.setItem(this.TOKEN, value)
-//   }
+  constructor(private http: HttpClient) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.token = currentUser && currentUser.token;
 
-//   public get token(): string{
-//     return localStorage.getItem(this.TOKEN);
-//   }
+  }
 
-//   public set lastRequest(value: Date){
-//     localStorage.setItem(this.LAST_REQUEST, value.toString())
-//   }
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<any>(this.url, { username: username, password: password })
+      .pipe(
+        map(user => {
+          if (user && user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+          }
+          return user;
+        })
+      );
+  }
 
-//   public get lastRequest(): Date{
-//     return new Date(localStorage.getItem(this.LAST_REQUEST));
-//   }
+  logout(): void {
+    this.token = null;
+    localStorage.removeItem('currentUser');
+  }
 
-//   public get isAuthenticated(): boolean{
-//     var now = new Date();
-//     if(this.token){
-//       if(this.lastRequest){
-//         if(now.getTime() - this.lastRequest.getTime() <= this.EXPIRE_SESSION_TIME){
-//           return true;
-//         }
-//       }
-//     }
-//     this.logout(); //Limpa todos os metadados relacionados ao login do Local Storage.
-//     return false;
-//   }
-
-//   public login(authToken: string){
-//     this.token = authToken;
-//     this.lastRequest = new Date();
-//   }
-
-//   public logout(){
-//     localStorage.removeItem(this.LAST_REQUEST);
-//     localStorage.removeItem(this.TOKEN);
-//   }
-
-// }
+}

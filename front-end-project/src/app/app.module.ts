@@ -22,7 +22,7 @@ const modules = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent    
+    LoginComponent
   ],
   imports: [
     BrowserAnimationsModule,
