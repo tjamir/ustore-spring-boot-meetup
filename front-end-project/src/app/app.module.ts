@@ -1,13 +1,18 @@
+import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+// import { CoreModule } from './@core/core.module';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PagesModule } from './pages/pages.module';
+import { AppRoutingModule } from './app-routing.module';
+// import { ThemeModule } from './@theme/theme.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { AuthGuard } from './auth/auth-guard.service';
 
-// theme
-import { RouterModule } from '@angular/router';
-import { NbThemeModule } from '@nebular/theme';
+import { LoginComponent } from './login/login.component';
+import { PagesModule } from './pages/pages.module';
 
 
 const modules = [
@@ -16,13 +21,18 @@ const modules = [
 
 @NgModule({
   declarations: [
-    AppComponent    
+    AppComponent,
+    LoginComponent    
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
-    AppRoutingModule,
-    // RouterModule.forRoot([ ... ]), // Router is required by Nebular
-    NbThemeModule.forRoot(),
+    // AppRoutingModule,
+    HttpClientModule,
+    // RouterModule.forRoot(routes, { useHash: false }),
+    NgbModule.forRoot(),
+    // ThemeModule.forRoot(),
+    // CoreModule.forRoot()
     ...modules
   ],
   providers: [],

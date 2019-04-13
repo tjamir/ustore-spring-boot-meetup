@@ -1,17 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
+
+
+
+// import { LoginComponent } from './login/login.component';
 import { PagesComponent } from './pages.component';
+import { PagesRoutingModule } from './pages-routing.module';
 
 const PAGES_COMPONENTS = [
-  LoginComponent,
   PagesComponent
+];
+
+const PAGES_MODULES = [
+  
 ];
 
 @NgModule({
   declarations: [...PAGES_COMPONENTS],
   imports: [
-    CommonModule
+    CommonModule,
+    // PagesRoutingModule,
+    // ...PAGES_MODULES
   ]
 })
 
