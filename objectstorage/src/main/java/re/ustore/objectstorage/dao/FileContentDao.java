@@ -3,9 +3,11 @@ package re.ustore.objectstorage.dao;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.stereotype.Component;
 import re.ustore.objectstorage.model.ContentFile;
 
 import java.io.ByteArrayInputStream;
@@ -14,6 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class FileContentDao {
 
     private GridFsTemplate gridFsTemplate;
@@ -45,5 +48,18 @@ public class FileContentDao {
         return null;
     }
 
+
+    public Boolean delete(Long id){
+
+        try {
+            List<GridFSFile> gridFSFiles = new ArrayList<GridFSFile>();
+            gridFsTemplate.delete(new Query(Criteria.where("metadata.id").is(id.toString())));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 
 }
