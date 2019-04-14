@@ -4,6 +4,7 @@ package re.ustore.objectstorage.model;
 public class ContentFile {
 
     private Long id;
+    private String filename;
     private String user;
     private byte[] bytes;
 
@@ -30,5 +31,13 @@ public class ContentFile {
 
     public void setBytes(byte[] bytes) {
         this.bytes = bytes;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

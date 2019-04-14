@@ -3,6 +3,7 @@ package re.ustore.objectstorage.dao;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,6 +20,7 @@ import java.util.List;
 @Component
 public class FileContentDao {
 
+    @Autowired
     private GridFsTemplate gridFsTemplate;
 
     public void save(ContentFile contentFile){
@@ -26,7 +28,7 @@ public class FileContentDao {
         DBObject metaData = new BasicDBObject();
         metaData.put("id", contentFile.getId());
         metaData.put("user", contentFile.getUser());
-        gridFsTemplate.store(inputStream,metaData).toString();
+        gridFsTemplate.store(inputStream,contentFile.getFilename(), metaData).toString();
     }
 
 
@@ -34,18 +36,24 @@ public class FileContentDao {
 
         try {
             List<GridFSFile> gridFSFiles = new ArrayList<GridFSFile>();
-            GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("metadata.id").is(id.toString())));
+            GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("metadata.id").is(id)));
+
+            if(gridFSFile == null)
+                return null;
+
             ContentFile contentFile = new ContentFile();
             contentFile.setId(id);
+            contentFile.setFilename(gridFSFile.getFilename());
             contentFile.setUser(gridFSFile.getMetadata().get("user").toString());
             byte[] bytes = this.gridFsTemplate.getResource(gridFSFile).getInputStream().readAllBytes();
             contentFile.setBytes(bytes);
             return contentFile;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
 
-        return null;
+
     }
 
 
@@ -53,7 +61,7 @@ public class FileContentDao {
 
         try {
             List<GridFSFile> gridFSFiles = new ArrayList<GridFSFile>();
-            gridFsTemplate.delete(new Query(Criteria.where("metadata.id").is(id.toString())));
+            gridFsTemplate.delete(new Query(Criteria.where("metadata.id").is(id)));
         } catch (Exception e) {
             e.printStackTrace();
             return false;
